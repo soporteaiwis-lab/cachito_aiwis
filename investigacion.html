@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cachito, la Leyenda del Sound</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Archivo:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: noche de fonda nortina — afiche de cumbia sound sobre pantalla de casete; columna única, ecualizador en el hero */
+:root{
+  --noche:#120f2b;      /* fondo, azul pampa de noche */
+  --tabla:#1d1946;      /* superficies */
+  --linea:#3a3474;
+  --texto:#f3eefc;
+  --suave:#b7aedb;
+  --fucsia:#ff3d8b;     /* acento afiche */
+  --sol:#ffc53d;        /* amarillo chicha */
+  --cielo:#4fd1ff;
+  --f-display:"Bungee", "Arial Black", Impact, sans-serif;
+  --f-body:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{background:var(--noche);color:var(--texto);font-family:var(--f-body);font-size:16px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--noche)}
+a{color:var(--cielo)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--sol);outline-offset:2px;border-radius:4px}
+.wrap{max-width:860px;margin:0 auto}
+
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--noche) 92%,transparent);
+  backdrop-filter:blur(6px);border-bottom:1px solid var(--linea);margin:0 calc(-1 * max(16px, env(safe-area-inset-left,0px))) 0}
+nav .in{max-width:860px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:10px max(16px, env(safe-area-inset-left,0px));scrollbar-width:none}
+nav a{font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--suave);text-decoration:none;
+  padding:6px 10px;border-radius:999px;white-space:nowrap}
+nav a:hover{color:var(--texto);background:var(--tabla)}
+
+/* hero */
+header{padding-block:44px 28px;display:grid;gap:18px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sol)}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.3rem,8vw,4.6rem);line-height:.98;margin:0;text-wrap:balance}
+h1 .rosa{color:var(--fucsia)}
+h1 .sol{color:var(--sol);display:block;font-size:.52em;margin-top:.25em;letter-spacing:.02em}
+.lead{font-size:1.15rem;max-width:62ch;color:var(--texto);margin:0}
+.lead b{color:var(--sol)}
+.eq{display:flex;align-items:flex-end;gap:5px;height:56px}
+.eq span{flex:1;max-width:14px;background:linear-gradient(to top,var(--cielo),var(--fucsia) 60%,var(--sol));border-radius:2px;height:30%;
+  animation:eq 1.1s ease-in-out infinite alternate}
+@keyframes eq{to{height:100%}}
+@media (prefers-reduced-motion:reduce){.eq span{animation:none;height:60%}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--f-mono);font-size:12px;padding:5px 10px;border:1px solid var(--linea);border-radius:999px;color:var(--suave)}
+
+section{padding-block:36px 8px;scroll-margin-top:60px}
+h2{font-family:var(--f-display);font-weight:400;font-size:clamp(1.5rem,4.5vw,2.1rem);margin:0 0 18px;color:var(--fucsia);line-height:1.1;text-wrap:balance}
+h3{font-size:1.05rem;margin:0 0 4px}
+p{max-width:65ch}
+
+/* ficha tipo J-card de casete */
+.jcard{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));border:2px solid var(--sol);border-radius:10px;overflow:hidden}
+.jcard div{padding:14px 16px;border-right:1px dashed var(--linea);border-bottom:1px dashed var(--linea);min-width:0}
+.jcard dt{font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--sol)}
+.jcard dd{margin:4px 0 0;font-weight:500}
+
+/* timeline */
+.filtros{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filtros button{font:500 13px var(--f-body);color:var(--suave);background:transparent;border:1px solid var(--linea);border-radius:999px;padding:7px 14px;cursor:pointer}
+.filtros button[aria-pressed="true"]{background:var(--fucsia);border-color:var(--fucsia);color:#fff}
+ol.tl{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:2px solid var(--linea);margin-left:6px}
+ol.tl li{position:relative;padding:0 0 22px 22px}
+ol.tl li::before{content:"";position:absolute;left:-8px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--noche);border:3px solid var(--cielo)}
+ol.tl li[data-e="solista"]::before{border-color:var(--sol)}
+ol.tl li[data-e="dlatin"]::before{border-color:var(--fucsia)}
+.yr{font-family:var(--f-mono);font-size:13px;color:var(--sol);font-variant-numeric:tabular-nums}
+ol.tl p{margin:2px 0 0;color:var(--suave)}
+.tag{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:2px;background:var(--tabla);color:var(--suave)}
+
+/* versus */
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch}
+.vs .lado{background:var(--tabla);border-radius:10px;padding:16px;min-width:0}
+.vs .x{font-family:var(--f-display);font-size:1.8rem;color:var(--sol);align-self:center}
+.vs ul{margin:8px 0 0;padding-left:18px;color:var(--suave)}
+@media (max-width:560px){.vs{grid-template-columns:1fr}.vs .x{justify-self:center}}
+
+/* canciones */
+.tracks{display:grid;gap:0;border-top:1px solid var(--linea)}
+.track{display:grid;grid-template-columns:3.2rem 1fr auto;gap:12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--linea)}
+.track .n{font-family:var(--f-mono);color:var(--suave);font-variant-numeric:tabular-nums}
+.track .t{font-weight:700;min-width:0}
+.track .t small{display:block;font-weight:400;color:var(--suave)}
+.track .a{font-family:var(--f-mono);font-size:12px;color:var(--sol);text-align:right}
+
+.cita{border-left:4px solid var(--sol);padding:6px 0 6px 16px;margin:18px 0;font-size:1.15rem;font-weight:700}
+.cita small{display:block;font-weight:400;font-size:.85rem;color:var(--suave);margin-top:4px}
+
+/* links */
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.links a{display:block;background:var(--tabla);border:1px solid var(--linea);border-radius:10px;padding:14px;text-decoration:none;color:var(--texto)}
+.links a:hover{border-color:var(--cielo)}
+.links b{display:block}
+.links span{font-size:13px;color:var(--suave)}
+
+.nota{background:var(--tabla);border-radius:10px;padding:16px 18px}
+.nota ul{margin:6px 0 0;padding-left:18px;color:var(--suave)}
+.fuentes{font-size:14px;color:var(--suave);padding-left:18px}
+.fuentes li{margin-bottom:6px}
+footer{margin-top:40px;font-family:var(--f-mono);font-size:12px;color:var(--suave)}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<p style="padding-top:16px"><a href="index.html">← Volver a Leyenda Viva</a></p>
+<header>
+  <div class="eyebrow">Cumbia sound · Norte de Chile</div>
+  <h1><span class="rosa">Cachito</span> la Leyenda del Sound<span class="sol">Luis “Cachito” Navarro</span></h1>
+  <div class="eq" aria-hidden="true">
+    <span style="animation-delay:-.1s"></span><span style="animation-delay:-.5s"></span><span style="animation-delay:-.2s"></span><span style="animation-delay:-.8s"></span><span style="animation-delay:-.3s"></span><span style="animation-delay:-.6s"></span><span style="animation-delay:-.05s"></span><span style="animation-delay:-.9s"></span><span style="animation-delay:-.4s"></span><span style="animation-delay:-.7s"></span><span style="animation-delay:-.15s"></span><span style="animation-delay:-.55s"></span><span style="animation-delay:-.35s"></span><span style="animation-delay:-.85s"></span><span style="animation-delay:-.25s"></span><span style="animation-delay:-.65s"></span>
+  </div>
+  <p class="lead">Cantante nacido en <b>Alto Hospicio</b>, voz de la generación más recordada de <b>Amerika’n Sound</b>, fundador y cara de <b>D’Latin Sound</b>, y hoy solista con singles propios. Hijo de un cantante del mismo nombre y apodo, conocido como el “doble oficial” de Lucho Barrios.</p>
+  <div class="chips">
+    <span class="chip">Amerika’n Sound</span><span class="chip">D’Latin Sound</span><span class="chip">Nueva Armonía de Iquique</span><span class="chip">Solista</span>
+  </div>
+</header>
+
+<nav aria-label="Secciones"><div class="in">
+  <a href="#ficha">Ficha</a><a href="#trayectoria">Trayectoria</a><a href="#guerra">La guerra del sound</a><a href="#canciones">Canciones</a><a href="#hoy">Hoy</a><a href="#escuchar">Escuchar</a><a href="#fuentes">Fuentes</a>
+</div></nav>
+
+<section id="ficha">
+  <h2>Ficha técnica</h2>
+  <dl class="jcard">
+    <div><dt>Nombre</dt><dd>Luis Navarro</dd></div>
+    <div><dt>Apodo artístico</dt><dd>Cachito · “La Leyenda del Sound”</dd></div>
+    <div><dt>Origen</dt><dd>Alto Hospicio, Región de Tarapacá</dd></div>
+    <div><dt>Género</dt><dd>Cumbia sound / tecnocumbia chilena</dd></div>
+    <div><dt>Rol</dt><dd>Cantante, compositor, intérprete y animador</dd></div>
+    <div><dt>Padre</dt><dd>Cantante homónimo, “doble oficial” de Lucho Barrios (bolerista)</dd></div>
+    <div><dt>Grupos</dt><dd>Nueva Armonía de Iquique, Amerika’n Sound, D’Latin Sound</dd></div>
+    <div><dt>Instagram</dt><dd>@cachitolaleyenda_delsound · ~7.700 seguidores</dd></div>
+  </dl>
+</section>
+
+<section id="trayectoria">
+  <h2>Trayectoria</h2>
+  <div class="filtros" role="group" aria-label="Filtrar por etapa">
+    <button type="button" id="f-all" data-f="all" aria-pressed="true">Todo</button>
+    <button type="button" id="f-amk" data-f="amk" aria-pressed="false">Amerika’n Sound</button>
+    <button type="button" id="f-dls" data-f="dlatin" aria-pressed="false">D’Latin Sound</button>
+    <button type="button" id="f-sol" data-f="solista" aria-pressed="false">Solista</button>
+  </div>
+  <ol class="tl" id="tl">
+    <li data-e="amk"><span class="yr">1995</span><span class="tag">contexto</span>
+      <h3>Nace Amerika’n Sound en Iquique</h3>
+      <p>El grupo funda la llamada “onda sound”: cumbia con teclados electrónicos, ligada a la Zona Franca y a la escena de Iquique y Alto Hospicio.</p></li>
+    <li data-e="amk"><span class="yr">1996</span>
+      <h3>Entra tras la primera ruptura</h3>
+      <p>Después del disco <i>Onda nueva</i>, parte de los músicos originales se va a formar Tropi-ka’l Sound. Cachito se integra a la nueva formación: empieza como animador y pronto pasa a segunda voz junto a Víctor “Gato” Véliz.</p></li>
+    <li data-e="amk"><span class="yr">1996–97</span>
+      <h3>“Los Auténticos Amerika’n” en Coquimbo</h3>
+      <p>Ambos bandos se instalan en Coquimbo, epicentro tropical. Tropi-ka’l se anunciaba como “los verdaderos”; ellos respondían como “Los Auténticos Amerika’n”, con Víctor y Cachito al micrófono.</p></li>
+    <li data-e="amk"><span class="yr">1997</span>
+      <h3><i>Quiéreme</i> y “Haciendo el amor”</h3>
+      <p>La explosión definitiva del grupo. Muchos fans consideran a esta generación la más influyente de la historia del sound.</p></li>
+    <li data-e="amk"><span class="yr">1998</span>
+      <h3><i>Amerika’n Sound en vivo</i></h3>
+      <p>Grabado en una discoteca de Santiago, con llegada en limusina. Época de dos y tres shows por día.</p></li>
+    <li data-e="dlatin"><span class="yr">1999</span>
+      <h3>Ruptura y nace D’Latin Sound</h3>
+      <p>Seis músicos dejan Amerika’n Sound siguiendo a Cachito, más un ex Gran Eclipse Musical. Fundan D’Latin Sound en pleno auge del sound nortino, y reparten las ganancias en partes iguales.</p></li>
+    <li data-e="dlatin"><span class="yr">2000</span>
+      <h3><i>El sonido inconfundible</i></h3>
+      <p>Debut discográfico de D’Latin Sound, con Cachito a la cabeza y Víctor como segunda voz.</p></li>
+    <li data-e="dlatin"><span class="yr">2002</span>
+      <h3>Se disuelve la primera generación</h3>
+      <p>D’Latin Sound se separa y varios integrantes, entre ellos Cachito, vuelven a Amerika’n Sound.</p></li>
+    <li data-e="amk"><span class="yr">Mitad 2000s</span>
+      <h3>De vuelta en Amerika’n</h3>
+      <p>Regresa a la formación oficial en reemplazo del cantante Alejandro “Chapulín” Parada.</p></li>
+    <li data-e="amk"><span class="yr">2007</span>
+      <h3><i>Caídos del cielo</i></h3>
+      <p>Último disco de esa etapa del grupo. Incluye una frase que Cachito le dedicó a un compañero: “¿No te gusta? ¡Te encanta!”.</p></li>
+    <li data-e="dlatin"><span class="yr">2016</span>
+      <h3>Saludo al regreso de D’Latin</h3>
+      <p>La segunda generación de D’Latin Sound (activa desde 2014) publica un saludo grabado de Luis “Cachito” Navarro por su regreso.</p></li>
+    <li data-e="solista"><span class="yr">2019</span>
+      <h3>“La Nave del Amor”</h3>
+      <p>Circula como single de “Cachito Jr La Leyenda del Sound” en radios y canales de cumbia en vivo de Copiapó.</p></li>
+    <li data-e="solista"><span class="yr">2022–23</span>
+      <h3>“La Nave del Amor” en plataformas</h3>
+      <p>El tema llega a Apple Music y Spotify como single oficial.</p></li>
+    <li data-e="solista"><span class="yr">20 feb 2024</span>
+      <h3>“Tomaré”</h3>
+      <p>Su lanzamiento más reciente en plataformas digitales.</p></li>
+    <li data-e="solista"><span class="yr">Oct 2024</span>
+      <h3>Podcast <i>A Ver Qué Sale</i>, cap. 15</h3>
+      <p>Entrevista en el canal Vitoco Mix: habla de su paso por Amerika’n Sound y de su reinvención personal y artística después de cumplir una condena.</p></li>
+  </ol>
+</section>
+
+<section id="guerra">
+  <h2>La guerra del sound</h2>
+  <p>Tras la salida de 1999, Andrés Farías (tecladista, líder y dueño de la marca Amerika’n Sound) y el grupo de Cachito quedaron como rivales directos. Sonaban parecido, tocaban repertorio similar y hasta se promocionaban cara a cara: en el Estadio Municipal de Quillota un productor anunció el show como “Amerika’n versus D’Latin”.</p>
+  <div class="vs">
+    <div class="lado"><h3>Amerika’n Sound</h3>
+      <ul><li>Dueño único de la marca</li><li>Formación renovada con ex “Junior”</li><li>Look de cuero, luego blanco</li></ul></div>
+    <div class="x" aria-hidden="true">VS</div>
+    <div class="lado"><h3>D’Latin Sound</h3>
+      <ul><li>Liderado por Cachito</li><li>Ganancias en partes iguales</li><li>“El sonido inconfundible”</li></ul></div>
+  </div>
+  <p>Había un detalle extra: el nuevo cantante de Amerika’n, Cristián Farías, se parecía físicamente a Cachito, y en el ambiente lo llamaban “el doble” de Cachito.</p>
+</section>
+
+<section id="canciones">
+  <h2>Canciones y discos</h2>
+  <div class="tracks">
+    <div class="track"><span class="n">1997</span><span class="t">Quiéreme <small>Amerika’n Sound · incluye “Haciendo el amor”</small></span><span class="a">Disco</span></div>
+    <div class="track"><span class="n">1998</span><span class="t">Amerika’n Sound en vivo <small>Grabación en discoteca capitalina</small></span><span class="a">En vivo</span></div>
+    <div class="track"><span class="n">2000</span><span class="t">El sonido inconfundible <small>D’Latin Sound · debut</small></span><span class="a">Disco</span></div>
+    <div class="track"><span class="n">2007</span><span class="t">Caídos del cielo <small>Amerika’n Sound</small></span><span class="a">Disco</span></div>
+    <div class="track"><span class="n">2019</span><span class="t">La Nave del Amor <small>Solista · relanzada en plataformas 2022–23</small></span><span class="a">Single</span></div>
+    <div class="track"><span class="n">2024</span><span class="t">Tomaré <small>Solista · 20 de febrero</small></span><span class="a">Single</span></div>
+  </div>
+  <p style="color:var(--suave);font-size:14px">Clásicos de la etapa Amerika’n que siguen asociados al grupo: “Haciendo el amor”, “Cumbia”, “De aky pa’llá”, “Una copita más” y “Te amaré”.</p>
+</section>
+
+<section id="hoy">
+  <h2>Hoy</h2>
+  <p>Se presenta como cantante, compositor e intérprete, “ex vocalista” de Nueva Armonía de Iquique, Amerika’n Sound y D’Latin Sound, y ofrece shows con un mix de éxitos de ambas bandas. Mantiene página oficial en Facebook, cuenta en Instagram y presencia en TikTok, donde circulan fragmentos de su entrevista en el podcast de Vitoco Mix.</p>
+  <div class="cita">“La reinvención tras la cárcel”<small>Título del capítulo en que cuenta su vida después de cumplir condena · A Ver Qué Sale, octubre 2024</small></div>
+  <div class="nota">
+    <h3>Para tener en cuenta</h3>
+    <ul>
+      <li>Hay poca prensa formal sobre él como solista; gran parte de lo reciente viene de sus propias redes y entrevistas en podcast.</li>
+      <li>Las fechas de su regreso a Amerika’n varían según la fuente (2002 o mediados de los 2000).</li>
+      <li>Algunas publicaciones lo firman como “Cachito Jr”, probablemente para distinguirlo de su padre, que llevaba el mismo nombre y apodo.</li>
+      <li>No encontré información pública sobre los detalles de la condena; aquí solo se recoge lo que él mismo contó.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="escuchar">
+  <h2>Dónde escucharlo y seguirlo</h2>
+  <div class="links">
+    <a href="https://music.apple.com/us/artist/cachito-la-leyenda-del-sound/1762258042" target="_blank" rel="noopener"><b>Apple Music</b><span>“Tomaré” y “La Nave del Amor”</span></a>
+    <a href="https://open.spotify.com/playlist/2zgPi1UOgK9mDGsRMSQXcg" target="_blank" rel="noopener"><b>Spotify</b><span>Playlist de fans · 15 temas</span></a>
+    <a href="https://www.instagram.com/cachitolaleyenda_delsound/" target="_blank" rel="noopener"><b>Instagram</b><span>@cachitolaleyenda_delsound</span></a>
+    <a href="https://www.facebook.com/p/Pagina-oficial-Cachito-la-leyenda-del-sound-100063440875229/" target="_blank" rel="noopener"><b>Facebook</b><span>Página oficial · contrataciones</span></a>
+    <a href="https://www.tiktok.com/@vitocomixoficial/video/7424896518915738885" target="_blank" rel="noopener"><b>Podcast (TikTok)</b><span>A Ver Qué Sale, cap. 15 · la reinvención</span></a>
+    <a href="https://www.tiktok.com/@vitocomixoficial/video/7425383913138228485" target="_blank" rel="noopener"><b>Podcast (TikTok)</b><span>Su paso por Amerika’n Sound</span></a>
+    <a href="https://soundcloud.com/kamell/cachito-jr-la-leyenda-del-sound-la-nave-del-amor-single-agosto-2019mp3" target="_blank" rel="noopener"><b>SoundCloud</b><span>“La Nave del Amor” (2019)</span></a>
+    <a href="https://soundcloud.com/DLatinSoundOficialMR" target="_blank" rel="noopener"><b>D’Latin Sound oficial</b><span>Incluye su saludo de 2016</span></a>
+  </div>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ol class="fuentes">
+    <li><a href="https://ciperchile.cl/2008/09/03/el-abogado-de-los-car%E2%80%99e-jarro-que-quiso-hacer-fama-con-amerika%E2%80%99n-sound/" target="_blank" rel="noopener">CIPER Chile (2008)</a>: crónica de Juan Cristóbal Peña sobre la historia interna de Amerika’n Sound, con testimonios de Cachito.</li>
+    <li><a href="https://www.musicapopular.cl/grupo/d-latin-sound/" target="_blank" rel="noopener">MusicaPopular.cl</a>: ficha de D’Latin Sound.</li>
+    <li><a href="https://music.apple.com/us/artist/cachito-la-leyenda-del-sound/1762258042" target="_blank" rel="noopener">Apple Music</a>: discografía como solista.</li>
+    <li><a href="https://www.instagram.com/cachitolaleyenda_delsound/" target="_blank" rel="noopener">Instagram oficial</a>: biografía propia.</li>
+    <li><a href="https://www.tiktok.com/@vitocomixoficial/video/7424896518915738885" target="_blank" rel="noopener">Vitoco Mix</a>: podcast A Ver Qué Sale, cap. 15 (octubre 2024).</li>
+    <li><a href="https://www.radioagricultura.cl/entretencion/hoy-se-sale/amerikan-sound-celebrara-en-grande-sus-29-anos-de-historia-en-gran-arena-monticello_20240618/" target="_blank" rel="noopener">Radio Agricultura</a>: origen y clásicos de Amerika’n Sound.</li>
+  </ol>
+</section>
+
+<footer>Investigación y diseño: AIWIS · octubre 2026</footer>
+</div>
+
+<script>
+(function(){
+  var btns=document.querySelectorAll('.filtros button');
+  var items=document.querySelectorAll('#tl li');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var f=b.getAttribute('data-f');
+      btns.forEach(function(x){x.setAttribute('aria-pressed', x===b ? 'true':'false');});
+      items.forEach(function(li){ li.hidden = !(f==='all' || li.getAttribute('data-e')===f); });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

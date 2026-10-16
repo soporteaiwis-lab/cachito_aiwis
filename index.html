@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f0d0b">
+<meta name="description" content="LEYENDA VIVA (2027): el disco conceptual de Cachito, la Leyenda del Sound.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Leyenda Viva">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Leyenda Viva · Cachito</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: app móvil de una columna (máx. 1080px en escritorio) — cuero negro, cromo y un solo acento oro; disco 3D cromado en el hero, mini reproductor fijo sobre la barra de pestañas */
+:root{
+  --cuero:#0f0d0b;      /* fondo: cuero negro de los noventa */
+  --cuero-2:#191613;    /* superficies */
+  --cuero-3:#24201b;    /* superficies elevadas */
+  --linea:#332d26;
+  --texto:#f2ede5;
+  --suave:#a99f92;
+  --oro:#d9a84b;        /* único acento: oro viejo */
+  --oro-osc:#8a6526;
+  --cromo-1:#f4f4f2; --cromo-2:#9aa0a6; --cromo-3:#5b6066;
+  --ok:#7fbf8a; --pend:#c9a26a;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --nav-h:62px; --mini-h:64px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--cuero);color:var(--texto)}
+body{font-family:var(--f-body);font-size:16px;line-height:1.55;margin:0;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));
+  padding-block:0 calc(var(--nav-h) + var(--mini-h) + 28px + env(safe-area-inset-bottom,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--cuero)}
+a{color:var(--oro)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--oro);outline-offset:3px;border-radius:6px}
+.app{max-width:1080px;margin:0 auto}
+.cromo{background:linear-gradient(180deg,var(--cromo-1) 0%,var(--cromo-2) 48%,var(--cromo-3) 52%,var(--cromo-1) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* barra superior */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--cuero) 90%,transparent);backdrop-filter:blur(10px);
+  margin:0 calc(-1 * max(16px, env(safe-area-inset-left,0px)));padding:12px max(16px, env(safe-area-inset-left,0px));display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--linea)}
+.marca{font-family:var(--f-display);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:18px;line-height:1}
+.marca small{display:block;font-family:var(--f-mono);font-weight:400;font-size:10px;letter-spacing:.14em;color:var(--suave);margin-top:3px}
+.anio{font-family:var(--f-mono);font-size:12px;border:1px solid var(--oro-osc);color:var(--oro);padding:4px 9px;border-radius:999px}
+
+/* vistas */
+.vista{padding-top:18px}
+.vista[hidden]{display:none!important}
+h2.sec{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(1.9rem,6vw,2.8rem);line-height:.95;margin:28px 0 14px;text-wrap:balance}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--oro)}
+p{max-width:65ch}
+.muted{color:var(--suave)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:center;min-height:0}
+.hero-txt{display:grid;gap:14px;min-width:0}
+.hero h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(3.6rem,13vw,7.4rem);line-height:.82;margin:0;letter-spacing:-.005em}
+.hero .por{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:clamp(1rem,3.4vw,1.35rem);color:var(--oro)}
+.hero p{margin:0;color:var(--texto);font-size:1.05rem}
+.stage{position:relative;aspect-ratio:1/1;max-width:100%;width:100%;border-radius:20px;overflow:hidden;
+  background:radial-gradient(60% 55% at 50% 45%,#2a241d 0%,var(--cuero) 70%)}
+.stage canvas{width:100%!important;height:100%!important;display:block}
+.stage .fallback{position:absolute;inset:12%;border-radius:50%;background:conic-gradient(from 0deg,#d8d8d6,#6d7277,#e8e8e6,#4a4e53,#cfd0cf,#6d7277,#d8d8d6);box-shadow:0 30px 60px #0009}
+.stage .fallback::after{content:"";position:absolute;inset:32%;border-radius:50%;background:var(--cuero) url() center/cover}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;border-radius:999px;padding:12px 20px;font-weight:600;font-size:15px;text-decoration:none}
+.btn.pri{background:var(--oro);color:#1a1307}
+.btn.sec{background:var(--cuero-3);color:var(--texto);border:1px solid var(--linea)}
+.btn svg{width:18px;height:18px}
+.datos{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.dato{font-family:var(--f-mono);font-size:12px;color:var(--suave);border:1px solid var(--linea);border-radius:8px;padding:6px 10px}
+.dato b{color:var(--texto);font-weight:500}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.stage{order:-1;max-width:420px;justify-self:center}}
+
+/* capítulos (inicio) */
+.caps{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.cap{background:var(--cuero-2);border:1px solid var(--linea);border-radius:14px;padding:14px;cursor:pointer;text-align:left;display:grid;gap:4px;min-width:0}
+.cap:hover{border-color:var(--oro-osc)}
+.cap .r{font-family:var(--f-display);font-weight:900;font-size:2rem;line-height:1;color:var(--oro)}
+.cap .t{font-weight:600;line-height:1.25}
+.cap .s{font-size:12px;color:var(--suave)}
+
+/* tracklist */
+.player{background:var(--cuero-2);border:1px solid var(--linea);border-radius:20px;padding:16px;display:grid;grid-template-columns:112px 1fr;gap:16px;align-items:center}
+.player .cover{width:112px;height:112px;border-radius:12px;display:block;box-shadow:0 10px 30px #0008}
+.player .meta{min-width:0;display:grid;gap:6px}
+.player .tt{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.6rem;line-height:1;overflow-wrap:anywhere}
+.ctrls{display:flex;align-items:center;gap:8px}
+.ic{width:44px;height:44px;border-radius:50%;border:1px solid var(--linea);background:var(--cuero-3);display:grid;place-items:center;cursor:pointer}
+.ic.big{width:54px;height:54px;background:var(--oro);border:0;color:#1a1307}
+.ic svg{width:20px;height:20px}
+.seek{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-family:var(--f-mono);font-size:12px;color:var(--suave);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--oro)}
+.eq2d{height:28px;width:100%;display:block}
+@media (max-width:520px){.player{grid-template-columns:84px 1fr}.player .cover{width:84px;height:84px}.player .tt{font-size:1.3rem}}
+
+.lista{margin-top:16px;border-top:1px solid var(--linea)}
+.tr{border-bottom:1px solid var(--linea)}
+.tr-h{display:grid;grid-template-columns:2.4rem 1fr auto;gap:12px;align-items:center;padding:14px 4px;cursor:pointer;width:100%;background:none;border:0;text-align:left}
+.tr-h .n{font-family:var(--f-mono);color:var(--suave);font-variant-numeric:tabular-nums}
+.tr.on .tr-h .n{color:var(--oro)}
+.tr-h .ti{font-weight:600;min-width:0}
+.tr-h .ti small{display:block;font-weight:400;color:var(--suave);font-size:13px}
+.tr-h .der{display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:12px;color:var(--suave)}
+.pill{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.ok{color:var(--ok)} .pill.pend{color:var(--pend)}
+.tr-b{padding:0 4px 18px 2.4rem;display:grid;gap:12px}
+.tr-b[hidden]{display:none!important}
+.historia-cap{font-size:15px;color:var(--texto);background:var(--cuero-2);border-left:3px solid var(--oro);padding:10px 14px;border-radius:0 10px 10px 0;max-width:65ch}
+.letra{white-space:pre-wrap;font-size:15px;line-height:1.7;color:var(--texto);max-width:60ch}
+.letra .tag{color:var(--suave);font-family:var(--f-mono);font-size:11.5px}
+.letra .hab{color:var(--oro);font-style:italic}
+.mini-acc{display:flex;flex-wrap:wrap;gap:8px}
+.chipbtn{font-size:13px;border:1px solid var(--linea);background:var(--cuero-3);border-radius:999px;padding:7px 12px;cursor:pointer}
+.chipbtn input{display:none}
+
+/* historia */
+.relato{display:grid;gap:14px;max-width:68ch}
+.relato p{margin:0;font-size:1.05rem}
+.linea-t{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:0;position:relative}
+.linea-t li{display:grid;grid-template-columns:3.4rem 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--linea)}
+.linea-t .rn{font-family:var(--f-display);font-weight:900;font-size:2rem;color:var(--oro);line-height:1}
+.linea-t h3{margin:0 0 4px;font-size:1.05rem}
+.linea-t h3 span{font-weight:400;color:var(--suave)}
+.linea-t p{margin:0;color:var(--suave);font-size:15px}
+.bio{background:var(--cuero-2);border:1px solid var(--linea);border-radius:16px;padding:18px;display:grid;gap:12px}
+.bio p{margin:0}
+
+/* videos estilo cartelera */
+.fila{margin-bottom:22px}
+.fila h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.35rem;margin:0 0 10px;letter-spacing:.02em}
+.carril{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:thin}
+.vcard{flex:0 0 min(78%,320px);scroll-snap-align:start;background:var(--cuero-2);border:1px solid var(--linea);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;padding:0;transition:transform .2s}
+.vcard:hover{transform:translateY(-3px);border-color:var(--oro-osc)}
+.vthumb{aspect-ratio:16/9;position:relative;background:linear-gradient(135deg,#2a241d,#0f0d0b);max-width:100%}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vthumb .pl{position:absolute;right:10px;bottom:10px;width:40px;height:40px;border-radius:50%;background:var(--oro);display:grid;place-items:center;color:#1a1307}
+.vthumb .fb{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:2.2rem;color:var(--cromo-2);text-transform:uppercase}
+.vcard .vt{padding:10px 12px 12px;font-weight:600;font-size:14px;line-height:1.3}
+dialog{border:0;padding:0;background:var(--cuero-2);color:var(--texto);border-radius:16px;width:min(920px,94vw);max-width:94vw}
+dialog::backdrop{background:#000c}
+.dlg-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px}
+.dlg-v{aspect-ratio:16/9;width:100%;background:#000}
+.dlg-v iframe{width:100%;height:100%;border:0;display:block}
+
+/* fotos */
+.fotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.foto{position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:var(--cuero-2);border:1px dashed var(--linea);display:grid;place-items:center;text-align:center;max-width:100%}
+.foto img{width:100%;height:100%;object-fit:cover;display:block}
+.foto .ph{font-family:var(--f-mono);font-size:11px;color:var(--suave);padding:10px}
+.foto .x{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;border:0;background:#000a;color:#fff;cursor:pointer}
+
+/* redes */
+.redes{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.red{display:block;background:var(--cuero-2);border:1px solid var(--linea);border-radius:14px;padding:14px;text-decoration:none;color:var(--texto)}
+.red:hover{border-color:var(--oro-osc)}
+.red b{display:block}
+.red span{font-size:13px;color:var(--suave)}
+
+/* suno */
+.suno-intro{background:var(--cuero-2);border:1px solid var(--linea);border-radius:16px;padding:16px;display:grid;gap:8px}
+.suno-intro ol{margin:0;padding-left:20px;color:var(--suave)}
+.sk{border-bottom:1px solid var(--linea)}
+.sk>button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;background:none;border:0;padding:14px 4px;cursor:pointer;text-align:left;font-weight:600}
+.sk>button span.r{font-family:var(--f-mono);color:var(--oro);font-size:13px;margin-right:8px}
+.sk-b{display:grid;gap:12px;padding:0 0 18px}
+.sk-b[hidden]{display:none!important}
+.campo{background:var(--cuero-2);border:1px solid var(--linea);border-radius:12px;overflow:hidden;min-width:0}
+.campo-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--linea)}
+.campo-h b{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--oro)}
+.campo-h small{color:var(--suave);font-family:var(--f-mono);font-size:11px}
+.campo pre{margin:0;padding:12px;white-space:pre-wrap;word-break:break-word;font-family:var(--f-mono);font-size:12.5px;line-height:1.6;max-height:340px;overflow:auto}
+.copiar{font-size:12px;border:1px solid var(--linea);background:var(--cuero-3);border-radius:8px;padding:6px 12px;cursor:pointer}
+.copiar.ok{border-color:var(--ok);color:var(--ok)}
+
+/* mini reproductor + navegación */
+.mini{position:fixed;left:0;right:0;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px));z-index:25;
+  padding:0 max(10px, env(safe-area-inset-left,0px)) 0 max(10px, env(safe-area-inset-right,0px));pointer-events:none}
+.mini .in{pointer-events:auto;max-width:1060px;margin:0 auto;height:var(--mini-h);background:var(--cuero-3);border:1px solid var(--linea);border-radius:14px;display:grid;grid-template-columns:44px 1fr auto auto;gap:10px;align-items:center;padding:8px 10px;position:relative;overflow:hidden;box-shadow:0 -8px 30px #0008}
+.mini .bar{position:absolute;left:0;top:0;height:2px;background:var(--oro);width:0}
+.mini img{width:44px;height:44px;border-radius:8px;display:block}
+.mini .mt{min-width:0;cursor:pointer}
+.mini .mt b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+.mini .mt span{display:block;font-size:12px;color:var(--suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .ic{width:40px;height:40px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:26;background:var(--cuero);border-top:1px solid var(--linea);
+  padding:0 max(6px, env(safe-area-inset-left,0px)) env(safe-area-inset-bottom,0px) max(6px, env(safe-area-inset-right,0px))}
+nav.tabs .in{max-width:760px;margin:0 auto;height:var(--nav-h);display:grid;grid-template-columns:repeat(6,1fr)}
+nav.tabs button{background:none;border:0;cursor:pointer;display:grid;place-items:center;align-content:center;gap:3px;color:var(--suave);font-size:10.5px;letter-spacing:.02em;padding:4px 0}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--oro)}
+
+.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + var(--mini-h) + 20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:40;background:var(--texto);color:var(--cuero);padding:10px 16px;border-radius:12px;font-size:14px;max-width:min(92vw,520px);box-shadow:0 10px 30px #000a}
+.toast[hidden]{display:none!important}
+footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--linea);font-size:13px;color:var(--suave);display:grid;gap:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="app">
+  <header class="top">
+    <div class="marca">Cachito<small>La Leyenda del Sound</small></div>
+    <span class="anio">LEYENDA VIVA · 2027</span>
+  </header>
+
+  <!-- INICIO -->
+  <section class="vista" id="v-inicio" data-vista="inicio">
+    <div class="hero">
+      <div class="hero-txt">
+        <span class="eyebrow">Disco conceptual · Cumbia sound</span>
+        <h1><span class="cromo">Leyenda</span><br><span class="cromo">Viva</span></h1>
+        <div class="por">Cachito, la Leyenda del Sound</div>
+        <p id="concepto-corto"></p>
+        <div class="btns">
+          <button class="btn pri" type="button" id="btn-escuchar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Escuchar el disco</button>
+          <button class="btn sec" type="button" data-ir="historia">La historia</button>
+        </div>
+        <div class="datos">
+          <span class="dato"><b>10</b> capítulos</span>
+          <span class="dato"><b>&lt;4:00</b> por canción</span>
+          <span class="dato"><b>30</b> años de sound</span>
+        </div>
+      </div>
+      <div class="stage" id="stage" aria-label="Disco cromado de Leyenda Viva girando"></div>
+    </div>
+
+    <h2 class="sec">Los diez capítulos</h2>
+    <div class="caps" id="caps"></div>
+
+    <h2 class="sec">Síguelo</h2>
+    <div class="redes" id="redes"></div>
+  </section>
+
+  <!-- DISCO -->
+  <section class="vista" id="v-disco" data-vista="disco" hidden>
+    <h2 class="sec">El disco</h2>
+    <div class="player">
+      <img class="cover" id="p-cover" alt="Portada de Leyenda Viva">
+      <div class="meta">
+        <span class="eyebrow" id="p-cap">Capítulo I</span>
+        <div class="tt" id="p-titulo">Hijo del Doble</div>
+        <canvas class="eq2d" id="eq2d" height="56"></canvas>
+        <div class="ctrls">
+          <button class="ic" type="button" id="p-prev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+          <button class="ic big" type="button" id="p-play" aria-label="Reproducir"><svg viewBox="0 0 24 24" fill="currentColor" id="p-play-ic"><path d="M8 5v14l11-7z"/></svg></button>
+          <button class="ic" type="button" id="p-next" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="seek" style="margin-top:12px">
+      <span id="t-act">0:00</span><input type="range" id="seek" min="0" max="1000" value="0" aria-label="Posición"><span id="t-tot">0:00</span>
+    </div>
+    <div class="lista" id="lista"></div>
+    <p class="muted" style="font-size:14px;margin-top:14px">Los MP3 se leen desde la carpeta <code>mp3/</code> del repositorio. Mientras no estén subidos, puedes probar cada canción con el botón "Probar MP3 desde mi equipo".</p>
+  </section>
+
+  <!-- HISTORIA -->
+  <section class="vista" id="v-historia" data-vista="historia" hidden>
+    <h2 class="sec">La historia</h2>
+    <div class="relato" id="relato"></div>
+    <ol class="linea-t" id="linea-t"></ol>
+    <h2 class="sec">Biografía</h2>
+    <div class="bio">
+      <p id="bio"></p>
+      <div class="btns">
+        <a class="btn sec" href="investigacion.html">Investigación completa</a>
+        <a class="btn sec" id="lnk-inv" target="_blank" rel="noopener">Ver en Claude</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEOS -->
+  <section class="vista" id="v-videos" data-vista="videos" hidden>
+    <h2 class="sec">Cartelera</h2>
+    <div id="filas"></div>
+  </section>
+
+  <!-- FOTOS -->
+  <section class="vista" id="v-fotos" data-vista="fotos" hidden>
+    <h2 class="sec">Fotos</h2>
+    <p class="muted">Las fotos oficiales van en la carpeta <code>fotos/</code> con los nombres que aparecen en cada casilla. También puedes agregar fotos desde tu equipo para verlas aquí; quedan guardadas solo en este navegador.</p>
+    <div class="btns" style="margin:12px 0 16px">
+      <label class="btn pri" for="in-fotos" style="cursor:pointer">Agregar fotos</label>
+      <input type="file" id="in-fotos" accept="image/*" multiple hidden>
+    </div>
+    <div class="fotos" id="fotos"></div>
+  </section>
+
+  <!-- SUNO -->
+  <section class="vista" id="v-suno" data-vista="suno" hidden>
+    <h2 class="sec">Estudio Suno</h2>
+    <div class="suno-intro">
+      <b>Cómo generar cada canción</b>
+      <ol>
+        <li>En Suno, abre Custom Mode.</li>
+        <li>Copia el título, el Style, el Exclude y la letra en sus campos.</li>
+        <li>Genera 3 o 4 versiones y elige la que tenga el teclado más marcado.</li>
+        <li>Descarga el MP3 con el nombre indicado y súbelo a <code>mp3/</code>.</li>
+      </ol>
+      <span class="muted" style="font-size:13px">Sugerencia: Weirdness entre 20 y 35 %, Style Influence entre 70 y 80 %.</span>
+    </div>
+    <div id="suno" style="margin-top:12px;border-top:1px solid var(--linea)"></div>
+  </section>
+
+  <footer>
+    <span>LEYENDA VIVA (2027) · Producción AIWIS Music · "Vete" y "Mentirosa": Erupción de Malalhue.</span>
+    <span>Maquetas generadas con IA como propuesta artística. La voz definitiva es la de Cachito.</span>
+  </footer>
+</div>
+
+<div class="mini" id="mini">
+  <div class="in">
+    <div class="bar" id="mini-bar"></div>
+    <img id="mini-cover" alt="">
+    <div class="mt" id="mini-mt"><b id="mini-t">Hijo del Doble</b><span id="mini-s">Cap. I · Alto Hospicio</span></div>
+    <button class="ic" type="button" id="mini-play" aria-label="Reproducir"><svg viewBox="0 0 24 24" fill="currentColor" id="mini-play-ic"><path d="M8 5v14l11-7z"/></svg></button>
+    <button class="ic" type="button" id="mini-next" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+  </div>
+</div>
+
+<nav class="tabs" aria-label="Secciones">
+  <div class="in">
+    <button type="button" data-ir="inicio" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></svg>Inicio</button>
+    <button type="button" data-ir="disco"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>Disco</button>
+    <button type="button" data-ir="historia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h11a4 4 0 0 1 4 4v10H8a4 4 0 0 1-4-4z"/><path d="M8 9h7M8 13h5"/></svg>Historia</button>
+    <button type="button" data-ir="videos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg>Videos</button>
+    <button type="button" data-ir="fotos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>Fotos</button>
+    <button type="button" data-ir="suno"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg>Suno</button>
+  </div>
+</nav>
+
+<dialog id="dlg">
+  <div class="dlg-h"><b id="dlg-t"></b><span class="btns"><a class="copiar" id="dlg-yt" target="_blank" rel="noopener">Abrir en YouTube</a><button class="copiar" type="button" id="dlg-x">Cerrar</button></span></div>
+  <div class="dlg-v" id="dlg-v"></div>
+</dialog>
+
+<div class="toast" id="toast" role="status" hidden></div>
+<audio id="audio" preload="none"></audio>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const D = {"album": {"titulo": "LEYENDA VIVA", "artista": "Cachito, la Leyenda del Sound", "anio": "2027", "sello": "AIWIS Music", "repo": "cachito_aiwis", "concepto_corto": "Diez capítulos, una vida: de un cerro de Alto Hospicio a los escenarios de todo Chile, la caída, la cuenta pagada y el regreso. Cumbia sound del norte, producida para 2027."}, "historia": "LEYENDA VIVA es un disco conceptual. Cada canción es un capítulo de la vida de Luis \"Cachito\" Navarro, contado en primera persona y en orden: del cerro de Alto Hospicio donde su padre cantaba boleros, a las fondas de Coquimbo, la ruptura, la banda propia, la caída, la cuenta pagada y el regreso.\n\nEl hilo que une todo es la voz del animador. Cachito empezó gritando \"¡arriba esas manos!\" antes de ser cantante, y en el disco cada capítulo abre con su voz hablada, como si presentara su propia historia desde un escenario. El disco termina donde empezó: con una fiesta, pero ahora con los hijos de los que bailaban en los noventa.\n\nEl sonido es cumbia sound del norte: teclado líder al frente, requinto de guitarra, timbales, güiro y bajo cumbiero, con producción de 2027. Moderno en la mezcla, fiel en el alma. Ninguna canción pasa de cuatro minutos.\n\n\"Vete\" y \"Mentirosa\", de Erupción de Malalhue, ocupan los capítulos IV y VI. En la cumbia, las historias se cuentan como amores: \"Vete\" es la despedida de 1999 y \"Mentirosa\" es la mentira de la fama.", "bio": "Luis \"Cachito\" Navarro nació en Alto Hospicio. Es hijo de un cantante del mismo nombre y apodo, conocido como el doble oficial de Lucho Barrios. Entró a Amerika'n Sound en 1996: empezó como animador y pasó a segunda voz junto a Víctor \"Gato\" Véliz, en la generación del disco Quiéreme (1997). En 1999 salió con seis músicos y fundó D'Latin Sound, cuyo debut fue El sonido inconfundible (2000). Luego volvió a Amerika'n Sound y grabó Caídos del cielo (2007). Como solista lanzó \"La Nave del Amor\" y \"Tomaré\" (2024), y en 2024 contó su historia de reinvención en el podcast A Ver Qué Sale.", "investigacion_url": "https://claude.ai/artifact/UCeztzNBAae8wHfTaZ6PHv", "videos": [{"id": "p1HLokOLOjQ", "titulo": "La Nave del Amor (videoclip)", "fila": "Videoclips"}, {"id": "llz8k4sT5EU", "titulo": "Cachito, la Leyenda del Sound", "fila": "Videoclips"}, {"id": "gNjZE9nmu-Y", "titulo": "Amerika'n Sound junto a Cachito Navarro", "fila": "Su historia en el sound"}, {"id": "eLv0lXVAEPU", "titulo": "Su paso por Amerika'n Sound (A Ver Qué Sale)", "fila": "Entrevistas"}], "redes": [{"nombre": "Instagram", "detalle": "@cachitolaleyenda_delsound", "url": "https://www.instagram.com/cachitolaleyenda_delsound/"}, {"nombre": "Facebook", "detalle": "Página oficial", "url": "https://www.facebook.com/p/Pagina-oficial-Cachito-la-leyenda-del-sound-100063440875229/"}, {"nombre": "Apple Music", "detalle": "Tomaré · La Nave del Amor", "url": "https://music.apple.com/us/artist/cachito-la-leyenda-del-sound/1762258042"}, {"nombre": "Spotify", "detalle": "Playlist de fans", "url": "https://open.spotify.com/playlist/2zgPi1UOgK9mDGsRMSQXcg"}, {"nombre": "YouTube", "detalle": "La Nave del Amor", "url": "https://www.youtube.com/watch?v=p1HLokOLOjQ"}, {"nombre": "TikTok", "detalle": "Podcast A Ver Qué Sale", "url": "https://www.tiktok.com/@vitocomixoficial/video/7424896518915738885"}, {"nombre": "SoundCloud", "detalle": "La Nave del Amor (2019)", "url": "https://soundcloud.com/kamell/cachito-jr-la-leyenda-del-sound-la-nave-del-amor-single-agosto-2019mp3"}], "fotos": ["fotos/cachito-01.jpg", "fotos/cachito-02.jpg", "fotos/cachito-03.jpg", "fotos/cachito-04.jpg", "fotos/cachito-05.jpg", "fotos/cachito-06.jpg"], "tracks": [{"n": 1, "slug": "hijo-del-doble", "titulo": "Hijo del Doble", "capitulo": "I", "cap_titulo": "Alto Hospicio", "bpm": 100, "dur": "3:30", "credito": "Letra y concepto: AIWIS Music (Armin Salazar)", "historia": "Un cerro de Alto Hospicio, una radio grande en una casa chica. Su padre cantaba boleros y lo conocían como el doble oficial de Lucho Barrios. El niño aprende a cantar detrás del telón, y los teclados de la Zona Franca convierten ese bolero en cumbia sound.", "letra": "[Intro - Spoken: Cachito, over soft synth pad and güiro]\n(Esta historia empieza en Alto Hospicio...)\n(En una casa chica... con una radio grande...)\n(¡Cachito, la Leyenda del Sound... capítulo uno!)\n\n[Intro: synth lead hook, requinto guitar answers, timbales roll, band in with unison hit]\n\n[Verse 1: baritone lead, bass and güiro, guitar fills between lines]\nEn un cerro de Alto Hospicio\ndonde el viento trae la sal\nmi viejo cantaba boleros\ncon la voz de un temporal\nLe decían el doble oficial\nde don Lucho en el compás\ny yo, chico, detrás del telón\naprendía a respirar\n\n[Pre-Chorus: groove builds, timbales accents]\nMe enseñó que el que canta\nno se esconde del dolor\nque se sube al escenario\ncon la frente y el corazón\n\n[Chorus: full band, synth and guitar unison hook, light male backing vocals]\nSoy hijo del doble, papá\nllevo tu voz en la garganta\nde los boleros a la cumbia\nes la misma sangre la que canta\nSoy hijo del doble, papá\ntu nombre lo llevo yo\nLuis Navarro, la leyenda\nempezó con tu canción\n\n[Break: band stop, three unison hits]\n(¡Esto va pa' todos los papás que nos enseñaron a cantar!)\n\n[Verse 2: synth pad added, groove grows]\nMe dijeron Cachito en la casa\npor ser un cachito de usted\ncon zapatos que me quedaban grandes\nquise pisar donde pisé\nLos teclados de la Zona Franca\nme cambiaron el compás\ny el bolero se hizo cumbia\npa' bailar en Tarapacá\n\n[Instrumental: 8 bars, synth lead and requinto trading phrases, timbales and congas]\n\n[Final Chorus: key change up, full band, maximum energy]\nSoy hijo del doble, papá\nllevo tu voz en la garganta\nde los boleros a la cumbia\nes la misma sangre la que canta\nSoy hijo del doble, papá\ntu nombre lo llevo yo\nLuis Navarro, la leyenda\nempezó con tu canción\n\n[Outro - Spoken: Cachito]\n(¡Va por ti, viejo!)\n(¡Cachito, la Leyenda del Sound... y no hay más!)\n\n[Final Hit: timbales roll, unison band hit]\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 100 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, nostalgic and proud, warm bolero melody inside a danceable cumbia groove, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}, {"n": 2, "slug": "segunda-voz", "titulo": "Segunda Voz", "capitulo": "II", "cap_titulo": "El animador", "bpm": 104, "dur": "3:25", "credito": "Letra y concepto: AIWIS Music (Armin Salazar)", "historia": "Llega a la banda cuando se parte en dos. Le pasan el micrófono para animar: \"¡arriba esas manos!\". Una noche falta la voz y le toca a él. Desde ahí canta como segunda voz y recorre Chile en furgón, con tres shows por noche.", "letra": "[Intro - Spoken: Cachito, crowd ambience]\n(Primero me pasaron el micrófono pa' animar...)\n(¡Arriba esas manos, mi gente!)\n(...y nunca más lo solté.)\n\n[Intro: synth lead hook, requinto guitar run, timbales roll, unison hit]\n\n[Verse 1: baritone lead, bass, güiro and congas]\nLlegué cuando el grupo se partía en dos\ncon un micrófono y ganas de gritar\narriba esas manos, mi gente\nera todo lo que sabía cantar\nPero una noche faltó la voz\ny el jefe me dijo te toca a ti\ntemblaban las piernas, temblaba el sound\ny desde esa noche ya no me fui\n\n[Pre-Chorus: groove builds, timbales accents]\nAl lado del Gato, voz con voz\ndos gargantas y un mismo motor\n\n[Chorus: full band, synth and guitar hook, light male backing vocals]\nSegunda voz, segunda voz\nla que sostiene la canción\nla que no sale en la portada\npero le pone el corazón\nSegunda voz, segunda voz\ndel animador al cantor\nhoy la segunda es la primera\ny la leyenda soy yo\n\n[Break: band stop, animator call and response with crowd]\n(¡Cuando yo diga sound... ustedes dicen sound!)\n(¡Sound!) (¡Sound!)\n(¡Más fuerte, Chile!) (¡Sound!)\n\n[Verse 2: band returns, synth pad, timbales build]\nDe Iquique a Coquimbo en un furgón\ntres shows por noche y a dormir en el bus\nla chaqueta de cuero, el pelo peinado\ny la gente gritando bajo la luz\nAprendí que el público no perdona\nsi no le das el alma en cada canción\nque el animador también es músico\ncuando grita con el corazón\n\n[Instrumental: 8 bars, synth lead solo answered by requinto, timbales and congas]\n\n[Final Chorus: key change up, full band, maximum energy]\nSegunda voz, segunda voz\nla que sostiene la canción\nla que no sale en la portada\npero le pone el corazón\nSegunda voz, segunda voz\ndel animador al cantor\nhoy la segunda es la primera\ny la leyenda soy yo\n\n[Outro - Spoken: Cachito]\n(¡Cachito, la Leyenda del Sound!)\n\n[Final Hit: timbales roll, unison band hit]\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 104 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, joyful and energetic, call and response with the crowd, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}, {"n": 3, "slug": "los-autenticos", "titulo": "Los Auténticos", "capitulo": "III", "cap_titulo": "La guerra de Coquimbo", "bpm": 108, "dur": "3:35", "credito": "Letra y concepto: AIWIS Music (Armin Salazar)", "historia": "Coquimbo, fines de los noventa. Dos bandas con el mismo origen se disputan el público: unos se anuncian como los verdaderos, ellos como Los Auténticos. Fondas llenas, discos que suenan en todas las radios y un disco en vivo grabado con llegada en limusina.", "letra": "[Intro - Spoken: Cachito, fonda crowd ambience]\n(Coquimbo... noventa y siete...)\n(Dos grupos... un mismo sonido...)\n(Ellos decían que eran los verdaderos... nosotros... ¡los auténticos!)\n\n[Intro: fast synth lead hook, requinto guitar answers, timbales roll, unison hit]\n(¡Uepa! ¡Pa' la fonda!)\n\n[Verse 1: baritone lead, bass, güiro, congas]\nAfiche contra afiche en la avenida\nla ciudad pintada de sound\nunos decían somos los verdaderos\nnosotros, los auténticos de acá\nLa fonda llena, la tierra levantada\nel teclado sonando a todo dar\ny la gente decidía en la pista\nquién la hacía bailar más\n\n[Pre-Chorus: timbales build, band hits]\nQue no se pelee nadie\nque esto es pa' gozar\n\n[Chorus: full band, synth and guitar unison hook, light male backing vocals]\nSomos los auténticos, auténticos del sound\nlos que encienden la fonda y la hacen temblar\nsomos los auténticos, de norte a sur\nla cumbia electrónica que vino a quedar\n(¡Auténticos!) ¡Auténticos!\nal que no le guste... ¡que se ponga a bailar!\n\n[Verse 2: synth pad added, groove grows]\nLlegamos en limusina a la disco\npa' grabar en vivo esa noche de verdad\ncuero negro, humo y luces\ny en las radios el Quiéreme sin parar\nDos y tres shows por noche\ny la voz no se quería cansar\nla juventud era un incendio\nque ninguno quería apagar\n\n[Guitar Solo: short melodic electric guitar with warm overdrive, answered by synth lead, timbales driving]\n\n[Break: band stop]\n(¡Al que dijo que esto era una moda... treinta años después... aquí estamos!)\n\n[Final Chorus: key change up, full band, maximum energy]\nSomos los auténticos, auténticos del sound\nlos que encienden la fonda y la hacen temblar\nsomos los auténticos, de norte a sur\nla cumbia electrónica que vino a quedar\n(¡Auténticos!) ¡Auténticos!\nal que no le guste... ¡que se ponga a bailar!\n\n[Outro - Spoken: Cachito]\n(¡Cachito, la Leyenda del Sound... y no hay más!)\n\n[Final Hit: timbales roll, unison band hit]\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 108 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, euphoric fonda party, fast and festive, short melodic electric guitar solo with warm overdrive, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}, {"n": 4, "slug": "vete", "titulo": "Vete", "capitulo": "IV", "cap_titulo": "La ruptura", "bpm": 108, "dur": "3:40", "credito": "Letra y música: Erupción de Malalhue", "historia": "1999. Hay despedidas que se cantan. La banda se parte y Cachito se va con los músicos que creen en él. Esta canción de Erupción de Malalhue cuenta esa despedida como se cuentan en la cumbia: como un amor que se termina.", "letra": "[Intro - Spoken: Cachito, over synth pad]\n(Mil novecientos noventa y nueve...)\n(Hay despedidas que se cantan...)\n(Esta la escribieron mis hermanos de Erupción de Malalhue...)\n\n[Intro: synth lead hook with fast requinto guitar run, timbales roll, band in with unison hit]\n(¡Uepa! ¡Pa' bailar!)\n\n[Verse 1: clean groove, bass, güiro and congas, guitar answers between lines]\nHoy quiero decirte\nque ya no te amo\nhoy quiero que sepas\nque no aguanto más\nTú ya no me interesas\nyo ya te olvidé\nprefiero estar solo\nen mi soledad\n\n[Verse 2: synth pad added, groove grows, timbales build]\nTodo lo que hubo\nya se terminó\nno quiero que insistas\nes muy tarde ya\nHace mucho tiempo\nque esto terminó\nno vale la pena\nprolongarlo más\n\n[Break: band stop, three unison hits, timbales fill]\n\n[Chorus: full band, synth lead and synth stabs, light male backing vocals on \"vete, vete, vete\"]\nVete, vete, vete\nya no quiero verte aquí\nVete, vete, vete\nes mejor para los dos\nVete, vete, vete\nya lo nuestro se acabó\nVete, vete, vete\nnunca más quiero tu amor\n\n[Instrumental: synth lead and requinto guitar trading phrases, timbales and congas, ends with band stop]\n(¡Arriba esas manos!)\n\n[Verse 3: percussion and bass only, intimate vocal]\nHoy quiero decirte\nque ya no te amo\nhoy quiero que sepas\nque no aguanto más\nTú ya no me interesas\nyo ya te olvidé\nprefiero estar solo\nen mi soledad\n\n[Final Chorus: key change up, full band, synth lead, maximum energy]\nVete, vete, vete\nya no quiero verte aquí\nVete, vete, vete\nes mejor para los dos\nVete, vete, vete\nya lo nuestro se acabó\nDios a mí me entiende\nnunca más quiero tu amor\n\n[Outro - Spoken: Cachito]\n(¡Erupción de Malalhue... Cachito, la Leyenda del Sound!)\n\n[Final Hit: timbales roll, final unison band hit]\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 108 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, breakup anthem, clean and fast, determined and danceable, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}, {"n": 5, "slug": "el-sonido-inconfundible", "titulo": "El Sonido Inconfundible", "capitulo": "V", "cap_titulo": "Con lo puesto", "bpm": 106, "dur": "3:30", "credito": "Letra y concepto: AIWIS Music (Armin Salazar)", "historia": "Se van siete, sin nombre y sin marca. Lo que se gana en la noche se reparte por igual. Fundan una banda nueva y su primer disco lleva el nombre de lo único que se llevaron: el sonido. En los carteles los ponen frente a frente con su antigua banda.", "letra": "[Intro - Spoken: Cachito]\n(Nos fuimos siete... con lo puesto...)\n(Sin nombre, sin marca... solo con el sonido.)\n\n[Intro: synth lead hook, requinto guitar harmony, timbales roll, unison hit]\n\n[Verse 1: baritone lead, bass and güiro, guitar fills]\nNos fuimos con lo puesto, sin marca y sin patrón\nsiete músicos del norte y un solo corazón\nlo que se ganaba en la noche se partía por igual\nporque en esta banda nadie era más\n\n[Pre-Chorus: groove builds, timbales accents]\nNos dijeron que sin nombre no íbamos a llegar\nque la gente olvida...\npero la gente sabe escuchar\n\n[Chorus: full band, synth and guitar unison hook, light male backing vocals]\nEs el sonido inconfundible\nel que se reconoce al primer compás\nel teclado que llora, la guitarra que ríe\ny una voz que no se cansa de cantar\nEs el sonido inconfundible\nlo puedes copiar pero no igualar\nlo trae la sangre de Alto Hospicio\n¡y no hay más! (¡y no hay más!)\n\n[Verse 2: synth pad added, groove grows]\nEn el estadio nos pusieron frente a frente\nel cartel decía versus y la gente gritó\ny aunque sonábamos parecido\nel aplauso supo quién era quién\nA los hermanos que me siguieron\na los que creyeron en mí\nesta canción les pertenece\nporque sin ustedes no estaría aquí\n\n[Instrumental: 8 bars, synth lead solo with requinto answers, timbales and congas, band stop]\n(¡D' Latin... el sonido inconfundible!)\n\n[Final Chorus: key change up, full band, maximum energy]\nEs el sonido inconfundible\nel que se reconoce al primer compás\nel teclado que llora, la guitarra que ríe\ny una voz que no se cansa de cantar\nEs el sonido inconfundible\nlo puedes copiar pero no igualar\nlo trae la sangre de Alto Hospicio\n¡y no hay más! (¡y no hay más!)\n\n[Final Hit: timbales roll, unison band hit]\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 106 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, triumphant and brotherly, proud anthem feel, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}, {"n": 6, "slug": "mentirosa", "titulo": "Mentirosa", "capitulo": "VI", "cap_titulo": "Las luces y las mentiras", "bpm": 110, "dur": "3:30", "credito": "Letra y música: Erupción de Malalhue", "historia": "La fama trae aplausos y también promesas falsas: contratos que no llegan, amigos que aparecen solo cuando hay plata. Esta canción de Erupción de Malalhue habla de una mentira de amor, y en el disco es la mentira de la fama.", "letra": "[Intro - Spoken: Cachito]\n(La fama trae aplausos...)\n(...y también trae mentiras.)\n(Esta es de mis hermanos de Erupción de Malalhue...)\n\n[Intro: synth lead hook with fast requinto guitar run, timbales roll, band in with unison hit]\n(¡Uepa! ¡Pa' bailar!)\n\n[Verse 1: clean groove, bass, güiro and congas, guitar answers between lines]\nCuánto tuvo que pasar para darme cuenta\nde lo mala y traicionera que eras tú\nqué inocencia fue la mía al creerte\nfui un estúpido al decirte que te amé\nMuchas veces me dijiste que me amabas\npero ahora me di cuenta no es así\ntu profesión es el engaño y la mentira\nal descubrir que otro hombre tienes tú\n\n[Break: band stop, three unison hits]\n\n[Chorus: full band, synth lead and synth stabs, light male backing vocals on \"mentirosa\"]\nMentirosa, mentirosa, mentirosa\nno es verdad que tú me amabas, no es verdad\nyo pensé que eras sincera y cariñosa\nDios me libre de creerte una vez más\nMentirosa, mentirosa, mentirosa\ncuánto tiempo yo creí en tu amor\ntú eres falsa, embustera y caprichosa\nsolo sabes de mentira y falsedad\nNo te mereces que algún hombre te quiera\ny en castigo muy sola te quedarás\n\n[Instrumental: synth lead and requinto trading phrases, timbales fill, band stop]\n(¡Arriba esas manos!)\n\n[Final Chorus: key change up, full band, maximum energy]\nMentirosa, mentirosa, mentirosa\nno es verdad que tú me amabas, no es verdad\nyo pensé que eras sincera y cariñosa\nDios me libre de creerte una vez más\nMentirosa, mentirosa, mentirosa\ncuánto tiempo yo creí en tu amor\ntú eres falsa, embustera y caprichosa\nsolo sabes de mentira y falsedad\nNo te mereces que algún hombre te quiera\ny en castigo muy sola te quedarás\n\n[Outro: light male backing vocals, synth and requinto hook]\nNo te mereces que algún hombre te quiera\ny en castigo muy sola te quedarás\n\n[Final Hit: timbales roll, final unison band hit]\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 110 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, bitter but danceable, fast and punchy, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}, {"n": 7, "slug": "cuando-se-apagan-las-luces", "titulo": "Cuando se Apagan las Luces", "capitulo": "VII", "cap_titulo": "La caída", "bpm": 98, "dur": "3:35", "credito": "Letra y concepto: AIWIS Music (Armin Salazar)", "historia": "El sound pasa de moda. Llegan otros sonidos desde Argentina, el teléfono deja de sonar y los discos se arrumban. Sin el foco, Cachito se pierde en noches equivocadas. Cuando se apagan las luces se ve quién se queda: su familia.", "letra": "[Intro - Spoken: Cachito, over lonely synth pad]\n(Llega un día en que el teléfono deja de sonar...)\n(...y uno se queda solo con el eco.)\n\n[Intro: melancholic synth lead hook in minor key, requinto answers, soft timbales roll, band in]\n\n[Verse 1: baritone lead, bass and güiro, sparse guitar]\nSe fueron los contratos, se acabó el cartel\nllegaron otros sonidos del otro lado del cordón\nel disco que vendía miles\nterminó en una caja en el rincón\nY yo, que tuve todo el aplauso\nno supe qué hacer con el silencio\nme perdí en noches equivocadas\nbuscando afuera lo que estaba adentro\n\n[Pre-Chorus: groove builds slowly, timbales accents]\nNadie te enseña a bajar del escenario\nnadie te dice cómo se vive sin el foco\n\n[Chorus: full band, synth and guitar hook, light male backing vocals]\nCuando se apagan las luces\nse ve quién se queda a tu lado\ncuando se apagan las luces\nel ídolo vuelve a ser humano\nMe equivoqué, no lo niego\ny la vida me cobró lo que debía\ncuando se apagan las luces\nsolo queda la familia\n\n[Verse 2: synth pad added, groove grows]\nMi Silvia sostuvo la casa\nMaría Helena rezaba por mí\ny yo, terco como el viento del norte,\nno quise escuchar hasta el fin\nLos amigos de las fiestas\nse fueron con la última canción\ny en el espejo me miraba\nun hombre que no era yo\n\n[Instrumental: 8 bars, emotional synth lead melody, requinto answers, timbales]\n\n[Final Chorus: key change up, full band]\nCuando se apagan las luces\nse ve quién se queda a tu lado\ncuando se apagan las luces\nel ídolo vuelve a ser humano\nMe equivoqué, no lo niego\ny la vida me cobró lo que debía\ncuando se apagan las luces\nsolo queda la familia\n\n[Outro - Spoken: Cachito, band fades to synth pad]\n(Y la familia... nunca se apagó.)\n\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 98 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, melancholic minor key yet danceable, emotional and honest, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}, {"n": 8, "slug": "pague-mi-cuenta", "titulo": "Pagué Mi Cuenta", "capitulo": "VIII", "cap_titulo": "Cuatro paredes", "bpm": 100, "dur": "3:40", "credito": "Letra y concepto: AIWIS Music (Armin Salazar)", "historia": "No esconde nada: lo que hizo, lo pagó. Adentro, sin teclados ni luces, los compañeros le piden \"una del sound\" y el sonido vuelve a sonar en el patio. Entiende que la leyenda no estaba en el cartel. El día que sale, en la radio de un auto suena una canción suya.", "letra": "[Intro - Spoken: Cachito, intimate]\n(No vengo a esconder nada...)\n(Lo que hice, lo pagué...)\n(...y allá adentro, volví a cantar.)\n\n[Intro: soft synth lead hook, requinto guitar, güiro, timbales roll, band in]\n\n[Verse 1: baritone lead, bass and güiro, intimate]\nCuatro paredes y una ventana\nme enseñaron lo que no me enseñó la fama\ncontaba los días con una canción\nque cantaba bajito pa' no perder la voz\nLos compañeros me pedían una más\ncántate una del sound, Cachito, pa' recordar\ny en el patio, sin teclado ni luces,\nel sonido volvió a sonar\n\n[Pre-Chorus: groove builds, timbales accents]\nY entendí que la leyenda\nno estaba en el cartel... estaba en mí\n\n[Chorus: full band, synth and guitar hook, light male backing vocals]\nPagué mi cuenta, pagué mi cuenta\ncon la frente en alto y el corazón\nno le debo nada a nadie\nsolo le debo a Dios una canción\nPagué mi cuenta, pagué mi cuenta\ny aquí estoy de pie otra vez\nel que cae y se levanta\nvale el doble, ya lo ves\n\n[Verse 2: synth pad added, groove grows]\nLas cartas de mi Silvia en el bolsillo\nla foto de mi viejo en la pared\ncada noche le pedía al cielo\nuna oportunidad de volver\nY el día en que se abrió esa puerta\nel sol de Iquique me abrazó\nen la radio de un auto que pasaba\nsonaba el sound... y el que cantaba era yo\n\n[Instrumental: 8 bars, uplifting synth lead, requinto answers, timbales and congas]\n\n[Final Chorus: key change up, full band, maximum energy]\nPagué mi cuenta, pagué mi cuenta\ncon la frente en alto y el corazón\nno le debo nada a nadie\nsolo le debo a Dios una canción\nPagué mi cuenta, pagué mi cuenta\ny aquí estoy de pie otra vez\nel que cae y se levanta\nvale el doble, ya lo ves\n\n[Outro - Spoken: Cachito]\n(Pa' todos los que hoy están empezando de nuevo... ¡fuerza!)\n\n[Final Hit: timbales roll, unison band hit]\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 100 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, hopeful and dignified, from introspective to uplifting, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}, {"n": 9, "slug": "volvi-a-nacer", "titulo": "Volví a Nacer", "capitulo": "IX", "cap_titulo": "La reinvención", "bpm": 102, "dur": "3:30", "credito": "Letra y concepto: AIWIS Music (Armin Salazar)", "historia": "Silvia lo esperó. Vuelve de a poco: un escenario chico, una radio, un podcast donde cuenta su historia sin filtro. Saca \"La Nave del Amor\" y \"Tomaré\". Le canta a ella y a los cabros del barrio: siempre hay segunda salida.", "letra": "[Intro - Spoken: Cachito, tender]\n(Silvia... esta es para ti...)\n(Por esperarme... por creer cuando nadie creía.)\n\n[Intro: romantic synth lead hook, requinto guitar harmony, timbales roll, band in]\n\n[Verse 1: baritone lead, bass and güiro, guitar fills]\nMe esperaste cuando nadie esperaba\nguardaste mi lugar en la mesa\nme dijiste el que canta no se rinde\ny me devolviste la fuerza\nVolví a pisar un escenario chico\nuna radio, un podcast, un local\ny en cada aplauso estabas tú\ndiciéndome ya volverás\n\n[Pre-Chorus: groove builds, timbales accents]\nY lo que el tiempo me quitó\ntu cariño me lo devolvió\n\n[Chorus: full band, synth and guitar hook, light male backing vocals]\nVolví a nacer, volví a nacer\ncontigo, mi Silvia, volví a nacer\nlo que perdí ya no me duele\nsi al final te tengo a ti, mujer\nVolví a nacer, volví a nacer\ncumbia sound pa' empezar otra vez\nla nave del amor no se ha hundido\nsigue navegando, ya lo ves\n\n[Verse 2: synth pad added, groove grows]\nTomaré la vida como venga\ncon la lección bien aprendida\ny le canto a los cabros del barrio\nque siempre hay segunda salida\nQue no hay leyenda sin caída\nni canción sin un dolor\ny el que vuelve con humildad\ncanta mejor\n\n[Instrumental: 8 bars, romantic synth lead solo, requinto answers]\n(¡Esta va pa' todas las parejas que se esperaron!)\n\n[Final Chorus: key change up, full band]\nVolví a nacer, volví a nacer\ncontigo, mi Silvia, volví a nacer\nlo que perdí ya no me duele\nsi al final te tengo a ti, mujer\nVolví a nacer, volví a nacer\ncumbia sound pa' empezar otra vez\nla nave del amor no se ha hundido\nsigue navegando, ya lo ves\n\n[Final Hit: timbales roll, unison band hit]\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 102 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, romantic and grateful, warm and danceable, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}, {"n": 10, "slug": "leyenda-viva", "titulo": "Leyenda Viva", "capitulo": "X", "cap_titulo": "2027", "bpm": 108, "dur": "3:45", "credito": "Letra y concepto: AIWIS Music (Armin Salazar) · Guitarra invitada: Armin (AIWIS Music)", "historia": "Treinta años de sound. Los que bailaban de jóvenes en la fonda hoy llevan a sus hijos. El cierre del disco es una fiesta de norte a sur: un saludo al padre que está en el cielo, a Silvia, a María Helena, a los hermanos de Erupción de Malalhue y a los cabros que empiezan.", "letra": "[Intro - Spoken: Cachito, festival crowd ambience]\n(¡Dos mil veintisiete!)\n(¡De Alto Hospicio para todo Chile!)\n(Treinta años de sound... y la leyenda... ¡sigue viva!)\n\n[Intro: big synth lead hook, requinto guitar run, timbales roll, unison hit]\n(¡Uepa! ¡Arriba esas manos!)\n\n[Verse 1: baritone lead, bass, güiro, congas]\nDe Arica a Punta Arenas, del puerto a la pampa\nde Iquique a Coquimbo, de Valdivia hasta el sur\ntreinta años cantando la misma cumbia\ncon teclados nuevos y el mismo corazón\nLos que bailaban de jóvenes en la fonda\nhoy traen a sus hijos a cantar\ny los hijos se saben las canciones\nque sus padres no dejan de tararear\n\n[Pre-Chorus: timbales build, band hits]\nQue suene el teclado\nque la fiesta comenzó\n\n[Chorus: full band, synth and guitar unison hook, light male backing vocals]\nLeyenda viva, leyenda viva\nel sound nunca murió\nleyenda viva, leyenda viva\nlo lleva Chile en el corazón\nLeyenda viva, sube las manos\nque la noche es de los dos\nCachito, la Leyenda del Sound\n¡y no hay más! (¡y no hay más!)\n\n[Break: band stop]\n(¡Con la guitarra invitada... desde Lanco... el maestro Armin, AIWIS Music!)\n\n[Guitar Solo: melodic electric guitar solo with warm overdrive and sustain, answered by synth lead, timbales driving]\n\n[Verse 2: synth pad added, groove grows]\nLe canto al viejo que está en el cielo\na mi Silvia, a mi hermana, a mi barrio\na los que estuvieron en las malas\ny a los que gritan mi nombre en el escenario\nY a los cabros que empiezan en el sound\nles dejo lo que aprendí\nque el teclado se moderniza\npero el alma se queda aquí\n\n[Final Chorus: key change up, full band, maximum energy]\nLeyenda viva, leyenda viva\nel sound nunca murió\nleyenda viva, leyenda viva\nlo lleva Chile en el corazón\nLeyenda viva, sube las manos\nque la noche es de los dos\nCachito, la Leyenda del Sound\n¡y no hay más! (¡y no hay más!)\n\n[Outro - Spoken: Cachito, crowd cheering]\n(Leyenda Viva... producción AIWIS Music...)\n(Un abrazo a mis hermanos de Erupción de Malalhue...)\n(¡Cachito, la Leyenda del Sound... y no hay más!)\n\n[Final Hit: timbales roll, unison band hit]\n[End]", "style": "Chilean cumbia sound, northern Chile tecnocumbia from Iquique reimagined for 2027, modern polished studio production with real session musicians and human feel, 108 BPM, bright singing analog synth lead hook front and center, layered vintage keyboards, synth brass stabs, synth string pads, clean picked electric guitar requinto with chorus effect answering the voice, round cumbia bass with slides, live drummer with tight electronic pad accents, timbales fills, güiro, congas, cowbell, stops and unison hits, warm powerful Chilean male baritone lead, light male backing vocals only on hooks, live animator shouts, stadium festival anthem, maximum joy, melodic electric guitar solo with warm overdrive and sustain, big catchy chorus, radio length under 4 minutes, Spanish only", "exclude": "female lead vocal, female choir, big choir, gospel choir, stacked choir, pan flute, zampoña, andean flute, quena, trumpets, brass section, saxophone, reggaeton, dembow, trap, rap, EDM drop, techno, four on the floor, drum loop, English vocals, heavy autotune, lo-fi, rock, metal, jazz, salsa, bachata, mariachi, banda, colombian traditional cumbia, vintage scratchy recording, slow ballad, long intro"}]};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad = n => String(n).padStart(2,'0');
+const mp3Name = t => `mp3/${pad(t.n)}-${t.slug}.mp3`;
+const fmt = s => { if(!isFinite(s)) return '0:00'; s=Math.floor(s); return Math.floor(s/60)+':'+pad(s%60); };
+
+/* ---------- portada generada ---------- */
+function dibujarPortada(size){
+  const c=document.createElement('canvas'); c.width=c.height=size; const g=c.getContext('2d');
+  const r=size/2;
+  const bg=g.createRadialGradient(r,r*0.9,size*0.05,r,r,r*1.1); bg.addColorStop(0,'#2b251e'); bg.addColorStop(1,'#0b0a08');
+  g.fillStyle=bg; g.fillRect(0,0,size,size);
+  // surcos
+  g.strokeStyle='rgba(255,255,255,0.05)'; g.lineWidth=Math.max(1,size/600);
+  for(let i=0;i<70;i++){ g.beginPath(); g.arc(r,r,r*0.32+i*(r*0.62/70),0,Math.PI*2); g.stroke(); }
+  // anillo oro
+  g.strokeStyle='#d9a84b'; g.lineWidth=size*0.006; g.beginPath(); g.arc(r,r,r*0.9,0,Math.PI*2); g.stroke();
+  // texto circular
+  const txt='CACHITO · LA LEYENDA DEL SOUND · LEYENDA VIVA · 2027 · ';
+  g.fillStyle='#d9a84b'; g.font=`500 ${size*0.034}px "JetBrains Mono", monospace`; g.textAlign='center'; g.textBaseline='middle';
+  const step=(Math.PI*2)/txt.length;
+  for(let i=0;i<txt.length;i++){ const a=i*step-Math.PI/2; g.save(); g.translate(r+Math.cos(a)*r*0.82, r+Math.sin(a)*r*0.82); g.rotate(a+Math.PI/2); g.fillText(txt[i],0,0); g.restore(); }
+  // centro
+  const cg=g.createLinearGradient(0,r*0.55,0,r*1.45); cg.addColorStop(0,'#f4f4f2'); cg.addColorStop(.48,'#9aa0a6'); cg.addColorStop(.52,'#5b6066'); cg.addColorStop(1,'#f4f4f2');
+  g.fillStyle=cg; g.font=`900 ${size*0.17}px "Big Shoulders Display", Impact, sans-serif`;
+  g.fillText('LEYENDA',r,r*0.86); g.fillText('VIVA',r,r*1.18);
+  g.fillStyle='#d9a84b'; g.font=`700 ${size*0.04}px "Instrument Sans", Arial, sans-serif`; g.fillText('CACHITO',r,r*1.42);
+  return c;
+}
+
+/* ---------- estado ---------- */
+const audio=$('#audio');
+let actual=0, disp={}, locales={}, portadaURL='';
+let actx=null, analyser=null, freq=null;
+
+function init(){
+  $('#concepto-corto').textContent=D.album.concepto_corto;
+  $('#bio').textContent=D.bio;
+  $('#lnk-inv').href=D.investigacion_url;
+  document.fonts && document.fonts.ready.then(()=>{ portadaURL=dibujarPortada(600).toDataURL('image/jpeg',.9); ponerPortadas(); iniciar3D(); }).catch(()=>{ portadaURL=dibujarPortada(600).toDataURL(); ponerPortadas(); iniciar3D(); });
+  renderCaps(); renderLista(); renderHistoria(); renderVideos(); renderRedes(); renderSuno(); renderFotos();
+  cargarPista(0,false); comprobarMP3(); rutas();
+}
+function ponerPortadas(){ $('#p-cover').src=portadaURL; $('#mini-cover').src=portadaURL; }
+
+/* ---------- navegación ---------- */
+function ir(v){
+  document.querySelectorAll('.vista').forEach(s=>s.hidden = s.dataset.vista!==v);
+  document.querySelectorAll('nav.tabs button').forEach(b=>{ if(b.dataset.ir===v) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  try{ history.replaceState(null,'','#'+v); }catch(e){}
+  window.scrollTo({top:0});
+}
+function rutas(){
+  document.addEventListener('click',e=>{ const b=e.target.closest('[data-ir]'); if(b){ ir(b.dataset.ir); } });
+  const h=(location.hash||'').slice(1); if(['inicio','disco','historia','videos','fotos','suno'].includes(h)) ir(h);
+  $('#btn-escuchar').onclick=()=>{ ir('disco'); tocar(0); };
+  $('#mini-mt').onclick=()=>ir('disco');
+}
+
+/* ---------- render ---------- */
+function renderCaps(){
+  $('#caps').innerHTML=D.tracks.map((t,i)=>`<button class="cap" type="button" data-i="${i}"><span class="r">${t.capitulo}</span><span class="t">${esc(t.titulo)}</span><span class="s">${esc(t.cap_titulo)}</span></button>`).join('');
+  $('#caps').onclick=e=>{ const b=e.target.closest('.cap'); if(!b) return; ir('disco'); abrir(+b.dataset.i); };
+}
+function letraHTML(txt){
+  return txt.split('\n').map(l=>{
+    const s=l.trim();
+    if(/^\[.*\]$/.test(s)) return `<span class="tag">${esc(s)}</span>`;
+    if(/^\(.*\)$/.test(s)) return `<span class="hab">${esc(s)}</span>`;
+    return esc(l);
+  }).join('\n');
+}
+function renderLista(){
+  $('#lista').innerHTML=D.tracks.map((t,i)=>`
+    <div class="tr" id="tr-${i}">
+      <button class="tr-h" type="button" data-i="${i}" aria-expanded="false">
+        <span class="n">${pad(t.n)}</span>
+        <span class="ti">${esc(t.titulo)}<small>Cap. ${t.capitulo} · ${esc(t.cap_titulo)} · ${esc(t.credito)}</small></span>
+        <span class="der"><span class="pill pend" id="st-${i}">MP3 pendiente</span><span>${t.dur}</span></span>
+      </button>
+      <div class="tr-b" id="tb-${i}" hidden>
+        <div class="historia-cap">${esc(t.historia)}</div>
+        <div class="mini-acc">
+          <button class="chipbtn" type="button" data-play="${i}">Reproducir</button>
+          <label class="chipbtn">Probar MP3 desde mi equipo<input type="file" accept="audio/*" data-local="${i}"></label>
+          <span class="chipbtn" style="cursor:default">Archivo: <code>${mp3Name(t)}</code></span>
+        </div>
+        <div class="letra">${letraHTML(t.letra)}</div>
+      </div>
+    </div>`).join('');
+  $('#lista').addEventListener('click',e=>{
+    const p=e.target.closest('[data-play]'); if(p){ tocar(+p.dataset.play); return; }
+    const h=e.target.closest('.tr-h'); if(h){ abrir(+h.dataset.i, true); }
+  });
+  $('#lista').addEventListener('change',e=>{
+    const f=e.target.closest('[data-local]'); if(!f||!f.files[0]) return;
+    const i=+f.dataset.local; if(locales[i]) URL.revokeObjectURL(locales[i]);
+    locales[i]=URL.createObjectURL(f.files[0]); marcar(i,'local'); tocar(i);
+  });
+}
+function abrir(i, toggle){
+  const b=$('#tb-'+i), h=document.querySelector(`#tr-${i} .tr-h`);
+  const abrirlo = toggle ? b.hidden : true;
+  b.hidden=!abrirlo; h.setAttribute('aria-expanded', abrirlo);
+  if(abrirlo && !toggle) setTimeout(()=>$('#tr-'+i).scrollIntoView({behavior:'smooth',block:'start'}),60);
+}
+function renderHistoria(){
+  $('#relato').innerHTML=D.historia.split('\n\n').map(p=>`<p>${esc(p)}</p>`).join('');
+  $('#linea-t').innerHTML=D.tracks.map((t,i)=>`<li><span class="rn">${t.capitulo}</span><div><h3>${esc(t.cap_titulo)} <span>· ${esc(t.titulo)}</span></h3><p>${esc(t.historia)}</p></div></li>`).join('');
+}
+function renderVideos(){
+  const filas={}; D.videos.forEach(v=>(filas[v.fila]=filas[v.fila]||[]).push(v));
+  $('#filas').innerHTML=Object.entries(filas).map(([f,vs])=>`
+    <div class="fila"><h3>${esc(f)}</h3><div class="carril">${vs.map(v=>`
+      <button class="vcard" type="button" data-yt="${v.id}" data-t="${esc(v.titulo)}">
+        <div class="vthumb"><span class="fb">Sound</span><img alt="" loading="lazy" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" onerror="this.remove()"><span class="pl"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="vt">${esc(v.titulo)}</div>
+      </button>`).join('')}</div></div>`).join('');
+  $('#filas').onclick=e=>{ const c=e.target.closest('.vcard'); if(!c) return; verVideo(c.dataset.yt,c.dataset.t); };
+  $('#dlg-x').onclick=()=>$('#dlg').close();
+  $('#dlg').addEventListener('close',()=>{ $('#dlg-v').innerHTML=''; });
+}
+function verVideo(id,t){
+  audio.pause();
+  $('#dlg-t').textContent=t; $('#dlg-yt').href='https://www.youtube.com/watch?v='+id;
+  $('#dlg-v').innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="${esc(t)}"></iframe>`;
+  try{ $('#dlg').showModal(); }catch(e){ window.open('https://www.youtube.com/watch?v='+id,'_blank'); }
+}
+function renderRedes(){
+  $('#redes').innerHTML=D.redes.map(r=>`<a class="red" href="${r.url}" target="_blank" rel="noopener"><b>${esc(r.nombre)}</b><span>${esc(r.detalle)}</span></a>`).join('')
+   + `<a class="red" href="investigacion.html"><b>Investigación</b><span>Biografía y fuentes</span></a>`;
+}
+function renderSuno(){
+  $('#suno').innerHTML=D.tracks.map((t,i)=>{
+    const campos=[['Título',t.titulo],['Style',t.style],['Exclude',t.exclude],['Lyrics',t.letra]];
+    return `<div class="sk"><button type="button" data-sk="${i}" aria-expanded="false"><span><span class="r">${pad(t.n)}</span>${esc(t.titulo)}</span><span class="muted" style="font-weight:400;font-size:13px">${t.bpm} BPM · ${t.dur}</span></button>
+      <div class="sk-b" id="sk-${i}" hidden>${campos.map(([k,v],j)=>`
+        <div class="campo"><div class="campo-h"><b>${k}</b><span style="display:flex;gap:8px;align-items:center"><small>${v.length} car.</small><button class="copiar" type="button" data-cp="${i}-${j}">Copiar</button></span></div><pre id="cp-${i}-${j}">${esc(v)}</pre></div>`).join('')}
+      </div></div>`;}).join('');
+  $('#suno').onclick=e=>{
+    const c=e.target.closest('[data-cp]'); if(c){ copiar($('#cp-'+c.dataset.cp).textContent,c); return; }
+    const s=e.target.closest('[data-sk]'); if(s){ const b=$('#sk-'+s.dataset.sk); b.hidden=!b.hidden; s.setAttribute('aria-expanded',!b.hidden); }
+  };
+}
+function copiar(txt,btn){
+  const ok=()=>{ btn.textContent='Copiado'; btn.classList.add('ok'); setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok');},1600); };
+  try{ navigator.clipboard.writeText(txt).then(ok).catch(()=>sel(btn)); }catch(e){ sel(btn); }
+}
+function sel(btn){ const pre=btn.closest('.campo').querySelector('pre'); const r=document.createRange(); r.selectNodeContents(pre); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('Texto seleccionado: cópialo con Ctrl+C o mantén presionado.'); }
+let tt; function toast(m){ const t=$('#toast'); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,3200); }
+
+/* ---------- fotos ---------- */
+const DB='cachito-fotos'; let db=null;
+function abrirDB(){ return new Promise(res=>{ try{ const r=indexedDB.open(DB,1); r.onupgradeneeded=()=>r.result.createObjectStore('f',{keyPath:'id',autoIncrement:true}); r.onsuccess=()=>{db=r.result;res(db)}; r.onerror=()=>res(null);}catch(e){res(null)} }); }
+function listarLocales(){ return new Promise(res=>{ if(!db) return res([]); try{ const q=db.transaction('f').objectStore('f').getAll(); q.onsuccess=()=>res(q.result||[]); q.onerror=()=>res([]);}catch(e){res([])} }); }
+async function renderFotos(){
+  if(!db) await abrirDB();
+  const locs=await listarLocales();
+  const oficiales=D.fotos.map(f=>`<div class="foto"><img src="${f}" alt="Cachito" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${f}'}))"></div>`).join('');
+  const propias=locs.map(l=>`<div class="foto"><img src="${URL.createObjectURL(l.blob)}" alt="Foto agregada"><button class="x" type="button" data-del="${l.id}" aria-label="Quitar foto">×</button></div>`).join('');
+  $('#fotos').innerHTML=propias+oficiales;
+}
+$('#in-fotos').addEventListener('change',async e=>{
+  if(!db) await abrirDB(); const fs=[...e.target.files]; if(!db){ toast('Este navegador no permite guardar fotos. Súbelas a la carpeta fotos/.'); return; }
+  const tx=db.transaction('f','readwrite'); fs.forEach(f=>tx.objectStore('f').add({blob:f,nombre:f.name})); tx.oncomplete=()=>{ renderFotos(); toast(fs.length+' foto(s) agregada(s).'); };
+  e.target.value='';
+});
+$('#fotos').addEventListener('click',e=>{ const x=e.target.closest('[data-del]'); if(!x||!db) return; const tx=db.transaction('f','readwrite'); tx.objectStore('f').delete(+x.dataset.del); tx.oncomplete=renderFotos; });
+
+/* ---------- reproductor ---------- */
+function marcar(i,st){ const p=$('#st-'+i); if(!p) return; disp[i]=st; p.className='pill '+(st?'ok':'pend'); p.textContent= st==='local'?'MP3 local':(st?'MP3 listo':'MP3 pendiente'); }
+function comprobarMP3(){
+  D.tracks.forEach((t,i)=>{ try{ fetch(mp3Name(t),{method:'HEAD'}).then(r=>marcar(i, r.ok?'repo':false)).catch(()=>marcar(i,false)); }catch(e){ marcar(i,false); } });
+}
+function cargarPista(i,auto){
+  actual=(i+D.tracks.length)%D.tracks.length; const t=D.tracks[actual];
+  audio.src= locales[actual] || mp3Name(t);
+  $('#p-titulo').textContent=t.titulo; $('#p-cap').textContent=`Capítulo ${t.capitulo} · ${t.cap_titulo}`;
+  $('#mini-t').textContent=t.titulo; $('#mini-s').textContent=`Cap. ${t.capitulo} · ${t.cap_titulo}`;
+  document.querySelectorAll('.tr').forEach((el,k)=>el.classList.toggle('on',k===actual));
+  if('mediaSession' in navigator){ try{ navigator.mediaSession.metadata=new MediaMetadata({title:t.titulo,artist:D.album.artista,album:'Leyenda Viva (2027)',artwork:portadaURL?[{src:portadaURL,sizes:'600x600',type:'image/jpeg'}]:[]}); }catch(e){} }
+  if(auto) reproducir();
+}
+function tocar(i){ cargarPista(i,true); }
+function reproducir(){
+  prepararAudio();
+  const p=audio.play(); if(p) p.catch(()=>{ const t=D.tracks[actual]; toast(`"${t.titulo}" aún no tiene MP3. Súbelo como ${mp3Name(t)} o pruébalo desde tu equipo.`); abrir(actual); estadoPlay(); });
+}
+function prepararAudio(){
+  if(actx) { if(actx.state==='suspended') actx.resume(); return; }
+  try{ actx=new (window.AudioContext||window.webkitAudioContext)(); const src=actx.createMediaElementSource(audio); analyser=actx.createAnalyser(); analyser.fftSize=128; src.connect(analyser); analyser.connect(actx.destination); freq=new Uint8Array(analyser.frequencyBinCount); }catch(e){ analyser=null; }
+}
+function alternar(){ if(audio.paused) reproducir(); else audio.pause(); }
+const IC_PLAY='<path d="M8 5v14l11-7z"/>', IC_PAUSA='<path d="M7 5h4v14H7zm6 0h4v14h-4z"/>';
+function estadoPlay(){ const on=!audio.paused; $('#p-play-ic').innerHTML=on?IC_PAUSA:IC_PLAY; $('#mini-play-ic').innerHTML=on?IC_PAUSA:IC_PLAY; $('#p-play').setAttribute('aria-label',on?'Pausar':'Reproducir'); $('#mini-play').setAttribute('aria-label',on?'Pausar':'Reproducir'); }
+audio.addEventListener('play',estadoPlay); audio.addEventListener('pause',estadoPlay);
+audio.addEventListener('ended',()=>tocar(actual+1));
+audio.addEventListener('timeupdate',()=>{ const d=audio.duration||0, c=audio.currentTime||0; $('#t-act').textContent=fmt(c); $('#t-tot').textContent=fmt(d); if(d){ $('#seek').value=c/d*1000; $('#mini-bar').style.width=(c/d*100)+'%'; } });
+$('#seek').addEventListener('input',e=>{ if(audio.duration) audio.currentTime=e.target.value/1000*audio.duration; });
+$('#p-play').onclick=alternar; $('#mini-play').onclick=alternar;
+$('#p-next').onclick=()=>tocar(actual+1); $('#mini-next').onclick=()=>tocar(actual+1); $('#p-prev').onclick=()=>tocar(actual-1);
+if('mediaSession' in navigator){ try{ navigator.mediaSession.setActionHandler('nexttrack',()=>tocar(actual+1)); navigator.mediaSession.setActionHandler('previoustrack',()=>tocar(actual-1)); navigator.mediaSession.setActionHandler('play',reproducir); navigator.mediaSession.setActionHandler('pause',()=>audio.pause()); }catch(e){} }
+
+/* ecualizador 2D */
+const eq=$('#eq2d'), eg=eq.getContext('2d');
+function eqLoop(t){
+  const w=eq.clientWidth*2; if(eq.width!==w) eq.width=w; const h=eq.height; eg.clearRect(0,0,w,h);
+  const n=40, bw=w/n; const on=!audio.paused && analyser;
+  if(on) analyser.getByteFrequencyData(freq);
+  for(let i=0;i<n;i++){ const v= on ? freq[Math.floor(i*freq.length/n)]/255 : (0.12+0.06*Math.sin(t/600+i*0.6)); const bh=Math.max(2,v*h);
+    eg.fillStyle= i%7===0 ? '#d9a84b' : '#5b6066'; eg.fillRect(i*bw+2,h-bh,bw-4,bh); }
+  requestAnimationFrame(eqLoop);
+}
+requestAnimationFrame(eqLoop);
+
+/* ---------- disco 3D ---------- */
+function iniciar3D(){
+  const stage=$('#stage');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!window.THREE){ fallback3D(stage); return; }
+  let renderer; try{ renderer=new THREE.WebGLRenderer({antialias:true,alpha:true}); }catch(e){ fallback3D(stage); return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2)); stage.appendChild(renderer.domElement);
+  const scene=new THREE.Scene(); const cam=new THREE.PerspectiveCamera(36,1,0.1,100); cam.position.set(0,3.4,7.2); cam.lookAt(0,0,0);
+  scene.add(new THREE.AmbientLight(0xffffff,0.35));
+  const key=new THREE.DirectionalLight(0xffffff,1.1); key.position.set(4,6,5); scene.add(key);
+  const oro=new THREE.PointLight(0xd9a84b,2.2,20); oro.position.set(-4,2,2); scene.add(oro);
+  const frio=new THREE.PointLight(0x9fb4c8,1.2,20); frio.position.set(4,-1,-3); scene.add(frio);
+  const tex=new THREE.CanvasTexture(dibujarPortada(1024));
+  const cromo=new THREE.MeshStandardMaterial({color:0xcfd2d4,metalness:1,roughness:0.22});
+  const etiqueta=new THREE.MeshStandardMaterial({map:tex,metalness:0.35,roughness:0.45});
+  const disco=new THREE.Mesh(new THREE.CylinderGeometry(2,2,0.07,128),[cromo,etiqueta,etiqueta]);
+  const grupo=new THREE.Group(); grupo.add(disco); grupo.rotation.x=0.38; scene.add(grupo);
+  const aro=new THREE.Mesh(new THREE.TorusGeometry(2.02,0.025,16,160),new THREE.MeshStandardMaterial({color:0xd9a84b,metalness:1,roughness:0.3})); aro.rotation.x=Math.PI/2; grupo.add(aro);
+  // anillo de barras (ecualizador 3D)
+  const N=56, barras=[]; const matB=new THREE.MeshStandardMaterial({color:0x8a8f96,metalness:0.9,roughness:0.3}); const matO=new THREE.MeshStandardMaterial({color:0xd9a84b,metalness:0.9,roughness:0.3,emissive:0x3a2a0a});
+  for(let i=0;i<N;i++){ const a=i/N*Math.PI*2; const m=new THREE.Mesh(new THREE.BoxGeometry(0.09,1,0.09), i%8===0?matO:matB); m.position.set(Math.cos(a)*2.55,0,Math.sin(a)*2.55); grupo.add(m); barras.push(m); }
+  let tx=0, ty=0;
+  stage.addEventListener('pointermove',e=>{ const r=stage.getBoundingClientRect(); tx=((e.clientX-r.left)/r.width-.5)*0.5; ty=((e.clientY-r.top)/r.height-.5)*0.3; });
+  stage.addEventListener('pointerleave',()=>{tx=0;ty=0;});
+  function size(){ const w=stage.clientWidth, h=stage.clientHeight; renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  new ResizeObserver(size).observe(stage); size();
+  function loop(t){
+    const on=!audio.paused && analyser; if(on) analyser.getByteFrequencyData(freq);
+    disco.rotation.y += reduce ? 0 : (on? 0.03 : 0.006);
+    grupo.rotation.z += ((-tx)-grupo.rotation.z)*0.05; grupo.rotation.x += ((0.38+ty)-grupo.rotation.x)*0.05;
+    for(let i=0;i<N;i++){ const v= on ? freq[Math.floor((i%(N/2))/(N/2)*freq.length*0.8)]/255 : (reduce?0.25:0.18+0.12*Math.sin(t/500+i*0.45)); const h=0.1+v*1.4; barras[i].scale.y=h; barras[i].position.y=h/2-0.02; }
+    renderer.render(scene,cam); requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+function fallback3D(stage){ const d=document.createElement('div'); d.className='fallback'; stage.appendChild(d); const img=new Image(); img.src=portadaURL; img.alt=''; img.style.cssText='position:absolute;inset:30%;width:40%;height:40%;border-radius:50%'; stage.appendChild(img); }
+
+init();
+</script>
+
+</body>
+</html>
